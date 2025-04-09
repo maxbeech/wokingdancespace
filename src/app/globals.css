@@ -7,12 +7,13 @@
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
   
-  /* Bisley Base Theme Colors */
-  --primary: #059669; /* emerald-600 */
-  --primary-light: #10b981; /* emerald-500 */
-  --primary-dark: #047857; /* emerald-700 */
-  --accent: #fbbf24; /* amber-400 */
-  --accent-dark: #f59e0b; /* amber-500 */
+  /* Woking Dance Space Theme Colors */
+  --primary: #8b5cf6; /* purple-500 */
+  --primary-light: #a78bfa; /* purple-400 */
+  --primary-dark: #7c3aed; /* purple-600 */
+  --secondary: #ec4899; /* pink-500 */
+  --secondary-dark: #db2777; /* pink-600 */
+  --accent: #f472b6; /* pink-400 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,8 +38,12 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-playfair), serif;
   @apply font-semibold tracking-tight;
+}
+
+.font-display {
+  font-family: var(--font-playfair), serif;
 }
 
 /* Custom Scrollbar */
@@ -51,12 +56,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #047857;
+  background: #7c3aed;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #059669;
+  background: #8b5cf6;
 }
 
 /* Smooth Scrolling */
@@ -126,6 +131,57 @@ html {
   animation: scaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* Dance-specific animations */
+@keyframes gracefulSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.animate-spin-elegant {
+  animation: gracefulSpin 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse-elegant {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-elegant {
+  animation: pulse-elegant 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade animation for slider */
+@keyframes fadeSlide {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Glass Effect */
 .glass {
   background: rgba(255, 255, 255, 0.1);
@@ -134,17 +190,36 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Dark Pattern Overlay */
+.dark-pattern-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  background-image: url('/media/pattern.svg');
+  background-size: 50px;
+  background-repeat: repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
 /* Custom Button Styles */
 .btn {
   @apply inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition-all duration-300;
 }
 
 .btn-primary {
-  @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition-colors;
+  @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center px-6 py-3 border border-emerald-600 text-emerald-600 text-base font-medium rounded-md hover:bg-emerald-50 transition-colors;
+  @apply inline-flex items-center px-6 py-3 border border-purple-600 text-purple-600 text-base font-medium rounded-md hover:bg-purple-50 transition-colors;
+}
+
+.btn-accent {
+  @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 transition-colors;
 }
 
 .btn-white {
@@ -163,12 +238,12 @@ html {
 
 /* Gradient Text */
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-emerald-700;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500;
 }
 
 /* Enhanced Link Styles */
 .link-hover {
-  @apply inline-flex items-center hover:text-emerald-600 transition-colors;
+  @apply inline-flex items-center hover:text-purple-600 transition-colors;
 }
 
 .link-hover .icon {
@@ -199,20 +274,92 @@ html {
   background-image: 
     linear-gradient(to right, rgba(229, 231, 235, 0.1) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(229, 231, 235, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 32px 32px;
 }
 
-/* Badge styles */
+/* Media Slider Styles */
+.media-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.media-slider-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.media-slider-item.active {
+  animation: fadeSlide 10s infinite;
+}
+
+.media-slider-item:nth-child(2) {
+  animation-delay: 5s;
+}
+
+.media-slider-item:nth-child(3) {
+  animation-delay: 10s;
+}
+
+.media-slider-item:nth-child(4) {
+  animation-delay: 15s;
+}
+
+/* Custom Styles for Dance Classes */
+.class-card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl;
+}
+
+.class-card-image {
+  @apply h-48 w-full object-cover transition-transform duration-300;
+}
+
+.class-card:hover .class-card-image {
+  @apply transform scale-105;
+}
+
+.class-card-content {
+  @apply p-6;
+}
+
+.instructor-avatar {
+  @apply w-12 h-12 rounded-full border-2 border-white shadow-sm;
+}
+
+/* Badge Styles */
 .badge {
-  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
 }
 
-.badge-green {
-  @apply bg-emerald-100 text-emerald-800;
+.badge-purple {
+  @apply bg-purple-100 text-purple-800;
 }
 
-.badge-amber {
-  @apply bg-amber-100 text-amber-800;
+.badge-pink {
+  @apply bg-pink-100 text-pink-800;
+}
+
+/* Custom Styles for Dance Shows */
+.show-card {
+  @apply relative overflow-hidden rounded-lg shadow-lg;
+}
+
+.show-card-image {
+  @apply w-full h-64 object-cover transition-transform duration-500;
+}
+
+.show-card:hover .show-card-image {
+  @apply transform scale-105;
+}
+
+.show-card-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6 text-white;
 }
 
 /* Custom card styles */
@@ -234,7 +381,7 @@ html {
 
 /* Form elements */
 .form-input {
-  @apply w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500;
+  @apply w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500;
 }
 
 .form-label {
@@ -243,7 +390,7 @@ html {
 
 /* Page header */
 .page-header {
-  @apply py-16 bg-emerald-600 text-white;
+  @apply py-16 bg-purple-600 text-white;
 }
 
 .page-header-content {
@@ -255,7 +402,7 @@ html {
 }
 
 .page-header-subtitle {
-  @apply text-lg text-emerald-100 max-w-3xl;
+  @apply text-lg text-purple-100 max-w-3xl;
 }
 
 /* Responsive video container */
@@ -350,7 +497,7 @@ html {
 
 /* Custom styles for the CTA section */
 .cta-section {
-  @apply py-16 bg-emerald-600;
+  @apply py-16 bg-purple-600;
 }
 
 /* Custom styles for the about section */
@@ -456,7 +603,7 @@ html {
 }
 
 .result-score {
-  @apply text-3xl font-bold text-emerald-600 my-2;
+  @apply text-3xl font-bold text-purple-600 my-2;
 }
 
 /* Custom styles for the CTA section */
@@ -515,5 +662,5 @@ html {
 }
 
 .update-link {
-  @apply text-emerald-600 hover:text-emerald-700 font-medium;
+  @apply text-purple-600 hover:text-purple-700 font-medium;
 } 

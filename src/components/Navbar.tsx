@@ -45,31 +45,31 @@ const Navbar = () => {
       children: [
         { name: 'Our Story', href: '/about' },
         { name: 'Our Team', href: '/about/team' },
-        { name: 'Facilities', href: '/about/facilities' },
-        { name: 'Values & Mission', href: '/about/values' },
-        { name: 'Ofsted', href: '/about/ofsted' },
+        { name: 'Values & Mission', href: '/about/mission' },
       ],
     },
     {
-      name: 'Programs & Services', 
-      href: '/programs',
+      name: 'Classes', 
+      href: '/classes',
       children: [
-        { name: 'Holiday Club', href: '/programs/holiday-club' },
-        { name: 'After School Club', href: '/programs/after-school' },
-        { name: 'Breakfast Club', href: '/programs/breakfast' },
-        { name: 'Preschool', href: '/programs/preschool' },
-        { name: 'Wraparound Care', href: '/programs/wraparound' },
+        { name: 'Ballet', href: '/classes/ballet' },
+        { name: 'Contemporary', href: '/classes/contemporary' },
+        { name: 'Jazz', href: '/classes/jazz' },
+        { name: 'Tap', href: '/classes/tap' },
+        { name: 'Creative Dance', href: '/classes/creative' },
+        { name: 'Pilates & Fitness', href: '/classes/fitness' },
+        { name: 'Class Schedule', href: '/classes/schedule' },
+        { name: 'Class Pricing', href: '/classes/pricing' },
       ],
     },
+    { name: 'Studio', href: '/studio' },
     {
-      name: 'Parents',
-      href: '/parents',
+      name: 'Shows & Events',
+      href: '/shows',
       children: [
-        { name: 'Admissions', href: '/parents/admissions' },
-        { name: 'Fees', href: '/parents/fees' },
-        { name: 'FAQs', href: '/parents/faqs' },
-        { name: 'Policies', href: '/parents/policies' },
-        { name: 'Term Dates', href: '/parents/term-dates' },
+        { name: 'Upcoming Shows', href: '/shows' },
+        { name: 'Past Productions', href: '/shows/archive' },
+        { name: 'Workshops', href: '/shows/workshops' },
       ],
     },
     { name: 'Gallery', href: '/gallery' },
@@ -97,21 +97,21 @@ const Navbar = () => {
             <Link href="/" className="flex items-center space-x-3">
               <Image
                 src="/media/logo-icon_only.png"
-                alt="Bisley Base Logo"
+                alt="Woking Dance Space Logo"
                 width={50}
                 height={50}
                 className="w-12 h-12"
               />
               <div className="flex flex-col">
                 <span className={`text-xl font-bold tracking-tight transition-colors duration-300 ${
-                  isScrolled ? 'text-emerald-700' : 'text-white'
-                }`}>
-                  Bisley Base
+                  isScrolled ? 'text-purple-700' : 'text-white'
+                } font-display`}>
+                  Woking Dance Space
                 </span>
                 <span className={`text-xs font-medium transition-colors duration-300 ${
-                  isScrolled ? 'text-emerald-600' : 'text-emerald-100'
+                  isScrolled ? 'text-purple-600' : 'text-purple-100'
                 }`}>
-                  Childcare & Preschool
+                  Adult Dance Classes in Surrey
                 </span>
               </div>
             </Link>
@@ -127,10 +127,10 @@ const Navbar = () => {
                   className={`px-3 py-3 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
                     pathname === item.href
                       ? isScrolled
-                        ? 'text-emerald-700 bg-emerald-50'
+                        ? 'text-purple-700 bg-purple-50'
                         : 'text-white bg-white/10 backdrop-blur-sm'
                       : isScrolled
-                        ? 'text-gray-700 hover:text-emerald-700'
+                        ? 'text-gray-700 hover:text-purple-700'
                         : 'text-white hover:bg-white/10'
                   }`}
                 >
@@ -144,10 +144,10 @@ const Navbar = () => {
                         className={`group inline-flex items-center px-3 py-3 text-sm font-medium rounded-md outline-none transition-all duration-300 hover:scale-105 ${
                           pathname?.startsWith(item.href)
                             ? isScrolled
-                              ? 'text-emerald-700 bg-emerald-50'
+                              ? 'text-purple-700 bg-purple-50'
                               : 'text-white bg-white/10 backdrop-blur-sm'
                             : isScrolled
-                              ? 'text-gray-700 hover:text-emerald-700'
+                              ? 'text-gray-700 hover:text-purple-700'
                               : 'text-white hover:bg-white/10'
                         }`}
                       >
@@ -156,7 +156,7 @@ const Navbar = () => {
                           className={`ml-1 h-4 w-4 transform transition-transform duration-200 ${
                             open ? 'rotate-180' : ''
                           } ${
-                            isScrolled ? 'text-emerald-700' : 'text-white'
+                            isScrolled ? 'text-purple-700' : 'text-white'
                           }`}
                           aria-hidden="true"
                         />
@@ -178,7 +178,7 @@ const Navbar = () => {
                                 <Link
                                   key={subItem.name}
                                   href={subItem.href}
-                                  className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                                  className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-colors"
                                 >
                                   {subItem.name}
                                 </Link>
@@ -193,78 +193,83 @@ const Navbar = () => {
               )
             ))}
             <Link
-              href="/contact"
-              className="ml-2 inline-flex items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 hover:scale-105"
+              href="/classes/register"
+              className="ml-2 inline-flex items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-all duration-300 hover:scale-105"
             >
-              Book a Tour
+              Join a Class
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex items-center lg:hidden">
+          {/* Mobile Menu Button */}
+          <div className="flex lg:hidden">
             <button
+              type="button"
+              className={`inline-flex items-center justify-center p-2 rounded-md ${
+                isScrolled ? 'text-gray-700' : 'text-white'
+              } hover:text-purple-500 focus:outline-none`}
+              aria-controls="mobile-menu"
+              aria-expanded="false"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-md transition-colors duration-300 ${
-                isScrolled
-                  ? 'text-gray-900 hover:text-emerald-600'
-                  : 'text-white hover:text-emerald-200'
-              }`}
-              aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
-              <svg
-                className={`h-6 w-6 ${isMobileMenuOpen ? 'hidden' : 'block'}`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
-                className={`h-6 w-6 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              {!isMobileMenuOpen ? (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu panel */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            className="lg:hidden bg-white shadow-xl absolute w-full mobile-menu-container"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden mobile-menu-container bg-white shadow-lg"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 divide-y divide-gray-100">
+            <div className="px-4 pt-2 pb-4 space-y-1 overflow-y-auto max-h-[80vh]">
               {navigation.map((item) => (
-                <div key={item.name} className="py-2">
+                <div key={item.name} className="py-1">
                   {!item.children ? (
                     <Link
                       href={item.href}
-                      className={`block px-3 py-2 rounded-md text-base font-medium ${
+                      className={`block px-3 py-3 rounded-md text-base font-medium ${
                         pathname === item.href
-                          ? 'text-emerald-700 bg-emerald-50'
-                          : 'text-gray-900 hover:text-emerald-700 hover:bg-gray-50'
+                          ? 'text-purple-700 bg-purple-50'
+                          : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700'
                       }`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -272,15 +277,25 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <div className="space-y-1">
-                      <p className="px-3 py-2 text-base font-medium text-gray-900">
+                      <div
+                        className={`block px-3 py-3 rounded-md text-base font-medium text-gray-700 ${
+                          pathname?.startsWith(item.href)
+                            ? 'bg-purple-50 text-purple-700'
+                            : ''
+                        }`}
+                      >
                         {item.name}
-                      </p>
-                      <div className="pl-4 space-y-1 border-l-2 border-gray-100">
+                      </div>
+                      <div className="pl-4 space-y-1 border-l-2 border-purple-100 ml-3">
                         {item.children.map((subItem) => (
                           <Link
                             key={subItem.name}
                             href={subItem.href}
-                            className="block px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-emerald-700 hover:bg-gray-50"
+                            className={`block px-3 py-2 rounded-md text-sm font-medium ${
+                              pathname === subItem.href
+                                ? 'text-purple-700 bg-purple-50'
+                                : 'text-gray-600 hover:bg-purple-50 hover:text-purple-700'
+                            }`}
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {subItem.name}
@@ -291,13 +306,13 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <div className="pt-4">
+              <div className="pt-2 pb-1">
                 <Link
-                  href="/contact"
-                  className="w-full block text-center px-4 py-2 rounded-md text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700"
+                  href="/classes/register"
+                  className="block w-full text-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Book a Tour
+                  Join a Class
                 </Link>
               </div>
             </div>

@@ -6,8 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Hero from '@/components/Hero';
 import { 
-  CalendarDaysIcon, 
-  HeartIcon, 
+  CalendarIcon, 
   AcademicCapIcon, 
   UserGroupIcon,
   SparklesIcon,
@@ -107,41 +106,45 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
   );
 };
 
-// Services card component
-interface ServiceCardProps {
-  icon: React.ReactNode;
+// Class card component
+interface ClassCardProps {
+  image: string;
   title: string;
   description: string;
+  schedule: string;
   link: string;
   delay?: number;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, link, delay = 0 }) => {
+const ClassCard: React.FC<ClassCardProps> = ({ image, title, description, schedule, link, delay = 0 }) => {
   return (
     <FadeIn delay={delay} direction="up" className="h-full">
       <motion.div 
-        className="flex flex-col h-full bg-white rounded-xl shadow-sm hover:shadow-md p-6 transition-all duration-300 group"
+        className="class-card h-full"
         whileHover={{ y: -5 }}
       >
-        <div className="p-3 bg-emerald-50 rounded-xl w-fit mb-4 text-emerald-600">
-          {icon}
+        <div className="relative h-48 overflow-hidden">
+          <Image 
+            src={image} 
+            alt={title} 
+            fill 
+            className="class-card-image"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <div className="absolute bottom-3 left-3">
+            <span className="badge badge-purple">{schedule}</span>
+          </div>
         </div>
-        <h3 className="text-xl font-semibold mb-3 text-gray-900">{title}</h3>
-        <p className="text-gray-600 flex-grow mb-4">{description}</p>
-        <Link 
-          href={link} 
-          className="inline-flex items-center font-medium text-emerald-600 group-hover:text-emerald-700"
-        >
-          Learn more 
-          <motion.span 
-            className="ml-1 inline-block"
-            initial={{ x: 0 }}
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.3 }}
+        <div className="class-card-content">
+          <h3 className="text-xl font-bold mb-2 font-display">{title}</h3>
+          <p className="text-gray-600 mb-4">{description}</p>
+          <Link 
+            href={link} 
+            className="text-purple-600 hover:text-purple-800 font-medium flex items-center"
           >
-            <ArrowRightIcon className="w-4 h-4" />
-          </motion.span>
-        </Link>
+            Learn More <ArrowRightIcon className="ml-1 h-4 w-4" />
+          </Link>
+        </div>
       </motion.div>
     </FadeIn>
   );
@@ -151,45 +154,92 @@ export default function Home() {
   // Testimonials data
   const testimonials = [
     {
-      quote: "Bisley Base has been a second home for our children. The staff are incredible - so caring and attentive. Our kids absolutely love going there!",
-      author: "Sarah P.",
-      role: "Parent of Jack & Emily"
+      quote: "I started as a complete beginner in my 40s and never thought I'd be able to dance. The supportive community and excellent teachers have helped me grow in confidence and fall in love with ballet.",
+      author: "Jane Morris",
+      role: "Ballet & Contemporary"
     },
     {
-      quote: "The preschool program is exceptional. Our daughter has thrived in the stimulating environment and caring atmosphere that Bisley Base provides.",
-      author: "Mark T.",
-      role: "Parent of Sophia"
+      quote: "After years of wanting to try tap dancing, I finally joined WDS. The classes are challenging but fun, and performing in the shows has been an incredible experience I never thought I'd have.",
+      author: "Mark Thompson",
+      role: "Tap & Jazz"
     },
     {
-      quote: "As working parents, we rely on the wraparound care at Bisley Base. The flexibility, quality of care, and communication with parents is outstanding.",
-      author: "Emma & John H.",
-      role: "Parents of Oliver"
+      quote: "What makes Woking Dance Space special is how inclusive it is. No matter your age, background or ability, you're welcomed and encouraged. It's more than just dance classes - it's a community.",
+      author: "Sarah Jenkins",
+      role: "Contemporary & Creative"
     }
   ];
   
-  // Latest News data
-  const latestNews = [
+  // Classes data
+  const classes = [
     {
-      title: "Summer Holiday Club Booking Now Open",
-      date: "May 15, 2024",
-      image: "/media/484871687_1066676745504882_7776977396599937926_n.jpg",
-      excerpt: "Secure your child's place in our action-packed summer holiday club with exciting activities, outdoor adventures, and creative fun.",
-      link: "/news/summer-holiday-club"
+      title: "Ballet",
+      description: "Classical technique focusing on alignment, strength, and grace for all levels.",
+      image: "/media/32582015_1697582060361408_6135726739319422976_n.jpg",
+      schedule: "Monday & Wednesday",
+      link: "/classes/ballet"
     },
     {
-      title: "Preschool Open Day Announced",
-      date: "April 30, 2024",
-      image: "/media/484902036_1066676725504884_4700747617186550414_n.jpg",
-      excerpt: "Join us for our upcoming Open Day to tour our facilities, meet our qualified staff, and learn about our preschool curriculum.",
-      link: "/news/preschool-open-day"
+      title: "Contemporary",
+      description: "Expressive modern dance combining elements of ballet, jazz and lyrical styles.",
+      image: "/media/32554999_1697576077028673_1437418227033440256_n.jpg",
+      schedule: "Tuesday & Thursday",
+      link: "/classes/contemporary"
     },
     {
-      title: "New Forest School Activities Launch",
-      date: "April 12, 2024",
-      image: "/media/484918616_1066676722171551_1681522475451576546_n.jpg",
-      excerpt: "We're excited to introduce new forest school activities to our curriculum, fostering outdoor learning and exploration.",
-      link: "/news/forest-school-activities"
+      title: "Jazz",
+      description: "Dynamic rhythmic dance with influences from African and Caribbean traditions.",
+      image: "/media/32675369_1697583180361296_1165318579814400000_n.jpg",
+      schedule: "Wednesday & Friday",
+      link: "/classes/jazz"
+    },
+    {
+      title: "Tap",
+      description: "Percussive footwork that creates rhythm and sound through metal taps on shoes.",
+      image: "/media/32585724_1697582697028011_7151455258936344576_n.jpg",
+      schedule: "Thursday & Saturday",
+      link: "/classes/tap"
     }
+  ];
+
+  // Upcoming shows data
+  const upcomingShows = [
+    {
+      title: "Summer Showcase",
+      date: "July 15-16, 2023",
+      location: "Rhoda McGaw Theatre, Woking",
+      image: "/media/316180614_5610031842449724_1004370439022595399_n.jpg",
+      link: "/shows/summer-showcase",
+      badgeType: "purple"
+    },
+    {
+      title: "Contemporary Workshop",
+      date: "May 28, 2023",
+      location: "With guest teacher Sarah Johnson",
+      image: "/media/316171610_5610032145783027_4215840854848055820_n.jpg",
+      link: "/shows/workshops/contemporary-may",
+      badgeType: "pink"
+    },
+    {
+      title: "Winter Spectacular",
+      date: "December 9-10, 2023",
+      location: "Rhoda McGaw Theatre, Woking",
+      image: "/media/316240983_5610032369116338_374439241220607926_n.jpg",
+      link: "/shows/winter-spectacular",
+      badgeType: "purple"
+    }
+  ];
+
+  // Gallery images
+  const galleryImages = [
+    "/media/32582015_1697582060361408_6135726739319422976_n.jpg",
+    "/media/32675369_1697583180361296_1165318579814400000_n.jpg",
+    "/media/32585724_1697582697028011_7151455258936344576_n.jpg",
+    "/media/32554999_1697576077028673_1437418227033440256_n.jpg",
+    "/media/59379905_2202552093197733_1968728878667005952_n.jpg",
+    "/media/59488127_2202552029864406_2430191185835327488_n.jpg",
+    "/media/59519541_2202552013197741_429893713427169280_n.jpg",
+    "/media/58986724_2202551979864411_7664688461940523008_n.jpg",
   ];
 
   return (
@@ -197,300 +247,287 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
       
-      {/* About Section */}
+      {/* Classes Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <FadeIn>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  Welcome to Bisley Base
-                </h2>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Established in 2001, Bisley Base offers exceptional childcare and early education in the heart of Surrey. We provide a nurturing, stimulating environment where children can thrive, learn, and develop their unique potential.
-                </p>
-              </FadeIn>
-              <FadeIn delay={0.2}>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Our qualified team is dedicated to providing high-quality care and education for children aged 2-11 years, with a range of services including preschool, breakfast club, after-school club, and holiday club programs.
-                </p>
-              </FadeIn>
-              <FadeIn delay={0.3}>
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Link 
-                    href="/about" 
-                    className="px-6 py-3 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors duration-300 text-center"
-                  >
-                    About Us
-                  </Link>
-                  <Link 
-                    href="/parents/admissions" 
-                    className="px-6 py-3 border border-emerald-600 text-emerald-600 font-medium rounded-md hover:bg-emerald-50 transition-colors duration-300 text-center"
-                  >
-                    Enroll Now
-                  </Link>
-                </div>
-              </FadeIn>
-            </div>
-            <div className="relative">
-              <FadeIn delay={0.4} direction="left">
-                <div className="relative h-[500px] w-full rounded-xl overflow-hidden shadow-lg">
-                  <Image 
-                    src="/media/484869461_1066673028838587_705034766726118684_n.jpg" 
-                    alt="Children playing at Bisley Base"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.6} direction="up">
-                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
-                  <div className="flex items-center space-x-3 text-emerald-600">
-                    <SparklesIcon className="h-6 w-6" />
-                    <span className="font-semibold">Ofsted Outstanding</span>
-                  </div>
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.7} direction="up">
-                <div className="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
-                  <div className="flex items-center space-x-3 text-emerald-600">
-                    <HeartIcon className="h-6 w-6" />
-                    <span className="font-semibold">20+ Years Experience</span>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Our Services Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <FadeIn>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Our Programs & Services
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-display">
+                Dance Classes for Every Adult
               </h2>
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <p className="max-w-3xl mx-auto text-gray-600">
-                We offer a range of flexible childcare options to support families and nurture children's development
+              <p className="text-lg text-gray-600 mb-6">
+                Whether you're a complete beginner or an experienced dancer, we offer a wide range of classes to help you explore movement, build skills, and express yourself.
               </p>
-            </FadeIn>
-          </div>
+              <Link href="/classes" className="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium transition-colors">
+                View All Classes <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </FadeIn>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard 
-              icon={<AcademicCapIcon className="h-8 w-8" />}
-              title="Preschool"
-              description="Our preschool program offers a stimulating environment for children aged 2-4 years, focusing on play-based learning and development."
-              link="/programs/preschool"
-              delay={0.2}
-            />
-            
-            <ServiceCard 
-              icon={<CalendarDaysIcon className="h-8 w-8" />}
-              title="After School Club"
-              description="Providing fun, supervised care for school-aged children with activities, healthy snacks, and homework support."
-              link="/programs/after-school"
-              delay={0.3}
-            />
-            
-            <ServiceCard 
-              icon={<UserGroupIcon className="h-8 w-8" />}
-              title="Breakfast Club"
-              description="Start the day right with our breakfast club, offering nutritious meals and engaging activities before school begins."
-              link="/programs/breakfast"
-              delay={0.4}
-            />
-            
-            <ServiceCard 
-              icon={<HeartIcon className="h-8 w-8" />}
-              title="Holiday Club"
-              description="Action-packed holiday programs full of fun activities, trips, and themed events during school breaks."
-              link="/programs/holiday-club"
-              delay={0.5}
-            />
-            
-            <ServiceCard 
-              icon={<SparklesIcon className="h-8 w-8" />}
-              title="Wraparound Care"
-              description="Flexible childcare solutions that wrap around school hours, designed to support working parents."
-              link="/programs/wraparound"
-              delay={0.6}
-            />
-            
-            <ServiceCard 
-              icon={<CalendarDaysIcon className="h-8 w-8" />}
-              title="Special Events"
-              description="Themed days, guest workshops, and seasonal celebrations that enrich our regular childcare programs."
-              link="/programs/special-events"
-              delay={0.7}
-            />
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonials Section */}
-      <section className="py-20 bg-emerald-600 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <svg width="100%" height="100%">
-            <pattern id="pattern-circles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
-              <circle id="pattern-circle" cx="20" cy="20" r="3" fill="#fff"></circle>
-            </pattern>
-            <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"></rect>
-          </svg>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <FadeIn>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                What Parents Say
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <p className="max-w-3xl mx-auto text-emerald-50">
-                Hear from the families who trust us with their children's care and education
-              </p>
-            </FadeIn>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <FadeIn key={index} delay={0.2 + index * 0.1} direction="up">
-                <div className="bg-white rounded-xl shadow-lg p-8 h-full flex flex-col">
-                  <div className="mb-4 text-emerald-500">
-                    <svg
-                      className="h-8 w-8"
-                      fill="currentColor"
-                      viewBox="0 0 32 32"
-                      aria-hidden="true"
-                    >
-                      <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600 mb-6 flex-grow italic">"{testimonial.quote}"</p>
-                  <div className="mt-auto">
-                    <p className="font-semibold text-gray-900">{testimonial.author}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
-                  </div>
-                </div>
-              </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {classes.map((classItem, index) => (
+              <ClassCard
+                key={classItem.title}
+                title={classItem.title}
+                description={classItem.description}
+                image={classItem.image}
+                schedule={classItem.schedule}
+                link={classItem.link}
+                delay={index * 0.1}
+              />
             ))}
           </div>
         </div>
       </section>
       
-      {/* Latest News Section */}
-      <section className="py-20 bg-white">
+      {/* About Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-            <div>
-              <FadeIn>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Latest News & Updates
-                </h2>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <p className="text-gray-600">
-                  Stay updated with the latest happenings at Bisley Base
-                </p>
-              </FadeIn>
-            </div>
-            <FadeIn delay={0.2}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <FadeIn direction="right">
+              <div className="relative">
+                <div className="absolute -top-4 -left-4 w-64 h-64 bg-purple-100 rounded-lg -z-10"></div>
+                <div className="absolute -bottom-4 -right-4 w-64 h-64 bg-pink-100 rounded-lg -z-10"></div>
+                <div className="relative rounded-lg overflow-hidden shadow-xl">
+                  <Image 
+                    src="/media/32675369_1697583180361296_1165318579814400000_n.jpg" 
+                    alt="Woking Dance Space studio" 
+                    width={600}
+                    height={450}
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+            </FadeIn>
+            
+            <FadeIn direction="left" delay={0.2}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 font-display">
+                About Woking Dance Space
+              </h2>
+              <p className="text-gray-600 mb-4">
+                Established in 1982, Woking Dance Space has been providing a supportive and inclusive environment for adults to explore dance for over 40 years. Our community-oriented approach means everyone is welcome, regardless of experience level.
+              </p>
+              <p className="text-gray-600 mb-6">
+                We believe that dance is for everyone and that it's never too late to start. Our classes cater to complete beginners through to advanced dancers, with experienced teachers who are passionate about sharing their love of dance.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <UserGroupIcon className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-lg font-medium text-gray-900">Inclusive Community</h3>
+                    <p className="mt-1 text-sm text-gray-500">Welcoming environment for dancers of all abilities</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <AcademicCapIcon className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-lg font-medium text-gray-900">Expert Teachers</h3>
+                    <p className="mt-1 text-sm text-gray-500">Experienced instructors with professional backgrounds</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <CalendarIcon className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-lg font-medium text-gray-900">Regular Performances</h3>
+                    <p className="mt-1 text-sm text-gray-500">Opportunities to perform in shows throughout the year</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <SparklesIcon className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-lg font-medium text-gray-900">Creative Expression</h3>
+                    <p className="mt-1 text-sm text-gray-500">Focus on personal development and artistic growth</p>
+                  </div>
+                </div>
+              </div>
+              
               <Link 
-                href="/news" 
-                className="mt-4 md:mt-0 inline-flex items-center font-medium text-emerald-600 hover:text-emerald-700"
+                href="/about" 
+                className="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors"
               >
-                View all news
-                <ArrowRightIcon className="ml-2 h-4 w-4" />
+                Discover Our Story
               </Link>
             </FadeIn>
           </div>
+        </div>
+      </section>
+      
+      {/* Shows & Events Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-display">
+                Upcoming Shows & Events
+              </h2>
+              <p className="text-lg text-gray-600">
+                Be part of our performances or join us as an audience member for our exciting shows and events throughout the year.
+              </p>
+            </div>
+          </FadeIn>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {latestNews.map((item, index) => (
-              <FadeIn key={item.title} delay={0.3 + index * 0.1} direction="up">
-                <motion.div 
-                  className="bg-white rounded-xl shadow-sm hover:shadow-md overflow-hidden h-full flex flex-col transition-all duration-300"
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="relative h-48">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <p className="text-sm text-emerald-600 mb-2">{item.date}</p>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 flex-grow">
-                      {item.excerpt}
-                    </p>
-                    <Link
-                      href={item.link}
-                      className="inline-flex items-center font-medium text-emerald-600 hover:text-emerald-700 mt-auto"
+            {upcomingShows.map((show, index) => (
+              <FadeIn key={show.title} delay={index * 0.1}>
+                <div className="show-card">
+                  <Image 
+                    src={show.image} 
+                    alt={show.title} 
+                    width={400}
+                    height={300}
+                    className="show-card-image"
+                  />
+                  <div className="show-card-overlay">
+                    <div className="mb-2">
+                      <span className={`badge badge-${show.badgeType}`}>{show.date}</span>
+                    </div>
+                    <h3 className="text-xl font-bold mb-1 font-display">{show.title}</h3>
+                    <p className="text-sm text-white/80 mb-3">{show.location}</p>
+                    <Link 
+                      href={show.link} 
+                      className="text-sm text-white font-medium hover:text-purple-200 transition-colors inline-flex items-center"
                     >
-                      Read more
-                      <ArrowRightIcon className="ml-2 h-4 w-4" />
+                      View Details <ArrowRightIcon className="ml-1 h-4 w-4" />
                     </Link>
                   </div>
-                </motion.div>
+                </div>
               </FadeIn>
             ))}
           </div>
+          
+          <FadeIn delay={0.3}>
+            <div className="text-center mt-12">
+              <Link 
+                href="/shows" 
+                className="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium transition-colors"
+              >
+                View All Shows & Events <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+      
+      {/* Testimonials */}
+      <section className="py-20 bg-purple-700 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display">
+                What Our Dancers Say
+              </h2>
+              <p className="text-lg text-purple-100">
+                Hear from our members about their experiences at Woking Dance Space.
+              </p>
+            </div>
+          </FadeIn>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <FadeIn key={index} delay={index * 0.1}>
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg h-full">
+                  <div className="flex items-center mb-4">
+                    <div className="flex-shrink-0 mr-4">
+                      <div className="h-12 w-12 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold text-xl">
+                        {testimonial.author.charAt(0)}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium">{testimonial.author}</h3>
+                      <p className="text-purple-200 text-sm">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <p className="italic text-purple-100">
+                    "{testimonial.quote}"
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Gallery */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-display">
+                Gallery
+              </h2>
+              <p className="text-lg text-gray-600">
+                Glimpses of our classes, performances, and community in action.
+              </p>
+            </div>
+          </FadeIn>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {galleryImages.map((src, index) => (
+              <FadeIn key={index} delay={index * 0.05}>
+                <div className="relative aspect-square overflow-hidden rounded-lg">
+                  <Image
+                    src={src}
+                    alt={`Dance gallery image ${index + 1}`}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+          
+          <FadeIn delay={0.4}>
+            <div className="text-center mt-12">
+              <Link 
+                href="/gallery" 
+                className="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium transition-colors"
+              >
+                View Full Gallery <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </section>
       
       {/* CTA Section */}
-      <section className="py-20 relative">
-        <ParallaxImage
-          src="/media/484917025_1068052962033927_2729368767143192861_n.jpg"
-          alt="Children playing at Bisley Base"
-          className="absolute inset-0"
-          imgClassName="brightness-[0.25]"
-        />
-        
-        {/* Additional dark overlay */}
-        <div className="absolute inset-0 bg-black/50"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <FadeIn>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Ready to Join Our Bisley Base Family?
+      <section className="py-16 bg-gradient-to-r from-purple-600 to-pink-500 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display">
+                Ready to Start Your Dance Journey?
               </h2>
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <p className="text-xl text-white/90 mb-8">
-                Take the first step in providing exceptional care and education for your child
+              <p className="text-lg text-white/90 mb-8">
+                Join our supportive community today and discover the joy of dance, no matter your experience level.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link 
+                  href="/classes/schedule" 
+                  className="px-6 py-3 bg-white text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors duration-300"
+                >
+                  View Class Schedule
+                </Link>
                 <Link 
                   href="/contact" 
-                  className="px-8 py-4 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors duration-300 text-center"
+                  className="px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-white/10 transition-colors duration-300"
                 >
-                  Book a Tour
-                </Link>
-                <Link 
-                  href="/parents/admissions" 
-                  className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/20 transition-colors duration-300 text-center"
-                >
-                  Enrollment Information
+                  Contact Us
                 </Link>
               </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>
