@@ -1,0 +1,97 @@
+.pricing-container {
+  background-image: url('/media/pattern.svg');
+  background-color: #0f172a;
+  background-attachment: fixed;
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(128, 100, 255, 0.5);
+}
+
+.price-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.price-card.popular {
+  border-color: #8884ff;
+  box-shadow: 0 0 15px rgba(136, 132, 255, 0.5);
+}
+
+.price-card.popular:hover {
+  box-shadow: 0 0 25px rgba(136, 132, 255, 0.7);
+}
+
+.gradient-btn {
+  background: linear-gradient(90deg, #8884ff 0%, #a78bfa 100%);
+  transition: all 0.3s ease;
+}
+
+.gradient-btn:hover {
+  background: linear-gradient(90deg, #7775e6 0%, #9b7df9 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(136, 132, 255, 0.4);
+}
+
+.outline-btn {
+  border: 2px solid #8884ff;
+  transition: all 0.3s ease;
+}
+
+.outline-btn:hover {
+  background-color: rgba(136, 132, 255, 0.1);
+}
+
+.faq-item {
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  transform: translateX(5px);
+}
+
+.special-offer {
+  background: linear-gradient(135deg, rgba(136, 132, 255, 0.1) 0%, rgba(136, 132, 255, 0.05) 100%);
+  border: 1px solid rgba(136, 132, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.special-offer:hover {
+  border-color: rgba(136, 132, 255, 0.6);
+  box-shadow: 0 5px 15px rgba(136, 132, 255, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.method-of-payment {
+  transition: all 0.3s ease;
+}
+
+.method-of-payment:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+  .price-cards-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+} 

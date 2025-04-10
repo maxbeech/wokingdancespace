@@ -101,12 +101,11 @@ export default function Header() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="/media/logo.png"
-                alt="Bookham Kitchens Logo"
-                width={180}
+                src="/media/logo-icon_only.png"
+                alt="Woking Dance Space"
+                width={50}
                 height={50}
-                className="h-auto"
-                priority
+                className="h-10 w-auto"
               />
             </Link>
 
